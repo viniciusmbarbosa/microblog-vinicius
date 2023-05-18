@@ -1,5 +1,19 @@
 <?php 
 require_once "../inc/cabecalho-admin.php";
+
+/* Detectando se o formulário foi acionado
+(clique no botão, ou ao pressionar enter) */
+if(isset($_POST['inserir'])){
+	
+	/* Caoturando os dados informados */
+	$nome = $_POST['nome'];
+	$nome = $_POST['email'];
+	/* No caso da senha, capturamos e codificamos */
+	$nome = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+	
+	$nome = $_POST['tipo'];
+
+}
 ?>
 
 

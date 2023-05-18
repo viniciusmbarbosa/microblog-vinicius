@@ -4,7 +4,7 @@ servidor de banco de dados MySQL */
 $servidor = "localhost";
 $usuario = "root";
 $senha = "";
-$banco = "microblog_tiago";
+$banco = "microblog_vinicius";
 
 /* Usando a função mysqli_connect para conectar ao servidor */
 $conexao = mysqli_connect($servidor, $usuario, $senha, $banco);
@@ -18,7 +18,7 @@ Se der algum problema conexão (ou resultado, conexao false)
 pare tudo (die) e mostre o erro. */
 if( !$conexao ){
     die(mysqli_connect_error($conexao));
-} else {
+} /* else {
     // Senão, deu tudo certo!
     echo "<p>Beleza, banco conectado!</p>";
-}
+} */
