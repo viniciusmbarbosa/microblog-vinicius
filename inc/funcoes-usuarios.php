@@ -71,6 +71,15 @@ function lerUsuario($conexao, $id){
     /* Extraimos dentro do resultado só o que nos interessa: os dados do usuário selecionado, já estruturados como um Array ASSOCIATIVO */
     
     return mysqli_fetch_assoc($resultado);
+
 }
 
 //fim lerUsuario
+
+// Usuda em usuário-atualiza.php
+function atualizarUsuario($conexao, $id, $nome, $email, $senha, $tipo){
+    $sql = "UPDATE usuarios SET nome = '$nome', email = '$email', senha = '$senha', tipo = '$tipo' WHERE id = $id";
+
+    //Executamos o comando
+    mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+}// fim atualizarUsuario
