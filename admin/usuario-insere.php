@@ -1,18 +1,29 @@
 <?php 
+// Importando o arquivo com funções de usuários
+require_once "../inc/funcoes-usuarios.php";
 require_once "../inc/cabecalho-admin.php";
 
 /* Detectando se o formulário foi acionado
 (clique no botão, ou ao pressionar enter) */
 if(isset($_POST['inserir'])){
-	
-	/* Caoturando os dados informados */
-	$nome = $_POST['nome'];
-	$nome = $_POST['email'];
-	/* No caso da senha, capturamos e codificamos */
-	$nome = password_hash($_POST['senha'], PASSWORD_DEFAULT);
-	
-	$nome = $_POST['tipo'];
 
+	/* Capturando os dados informados */
+	$nome = $_POST['nome'];
+	$email = $_POST['email'];
+
+	/* No caso da senha, capturamos e codificamos */
+	$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+	
+	$tipo = $_POST['tipo'];
+
+	/* Chamando a função para inserir um novo usuário,
+	e passando pra ela os dados capturados a partir
+	do formulário (mais o parâmetro de $conexao) */
+	inserirUsuario($conexao, $nome, $email, $senha, $tipo);
+
+	/* Após inserir o novo usuário, redirecionamos
+	para a página com a lista de usuários do site */
+	header("location:usuarios.php");
 }
 ?>
 
@@ -26,7 +37,7 @@ if(isset($_POST['inserir'])){
 				
 		<form class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir">
 
-			<div class="mb-3">
+			<div class="mb-3">  
 				<label class="form-label" for="nome">Nome:</label>
 				<input class="form-control" type="text" id="nome" name="nome" required>
 			</div>
