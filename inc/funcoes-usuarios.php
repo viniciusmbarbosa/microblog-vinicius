@@ -83,3 +83,18 @@ function atualizarUsuario($conexao, $id, $nome, $email, $senha, $tipo){
     //Executamos o comando
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 }// fim atualizarUsuario
+
+
+// Usada em login.php
+function buscaUsuario($conexao, $email){
+    //Montado a consulta p/ procurar um usuário pelo email informado
+    $sql = "SELECT * FROM usuarios where email = '$email'";
+
+    //Executando a consulta 
+    $resultado = mysqli_query($conexao, $sql) or die (mysqli_error($conexao));
+
+    //Retonando um array associativo com os daos (se houver)
+    return mysqli_fetch_assoc($resultado);
+
+
+}//Fim  buscandoUsuario
