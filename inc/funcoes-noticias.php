@@ -42,8 +42,11 @@ function upload($arquivo){
 
 
 /* Usada em noticias.php */
-function lerNoticias($conexao){
-    $sql = "SELECT 
+function lerNoticias($conexao, $idUsuarioLogado, $tipoUsuariologado){
+
+    if($tipoUsuariologado == 'admin'){
+        /* SQL do admin: pode carregar/ver tudo de todos */
+        $sql = "SELECT 
                 noticias.id, 
                 noticias.titulo, 
                 noticias.data,
@@ -51,6 +54,12 @@ function lerNoticias($conexao){
             FROM noticias INNER JOIN usuarios
             ON noticias.usuario_id = usuarios.id
             ORDER BY data DESC";
+    }else{
+        /* SQL do editor: pode carregar/ver tudo DELE APENAS. */
+        $sql = "SELECT * FROM noticias WHERE usuario_id = $idUsuarioLogado
+        ORDER BY data DESC";
+    }
+    
 
     $resultado = mysqli_query($conexao, $sql) or 
                     die(mysqli_error($conexao));
@@ -69,4 +78,28 @@ function lerNoticias($conexao){
 
     /* Retornamos a matriz de notícias */
     return $noticias;
-} // fim lerNoticias
+
+    
+}// fim lerNoticias 
+    /* Usada em notícia atualizada.php */
+    function formataData($data){
+    return date("d/m/Y H:i", strtotime($data));}
+
+
+
+
+    function lerUmaNoticia($conexao, $idNoticia, $idUsuarioLogado, $TipoUsuarioLogado){
+
+    if($TipoUsuarioLogado == 'admin'){
+        $sql = "SELECT * FROM noticias WHERE id = $idNoticia";
+    }else{
+        /* SQL do editor: carregar os dados somente da notícia dele */
+        $sql = "SELECT * FROM noticias WHERE id = $idNoticia 
+        AND usuario_id = $idUsuarioLogado";
+    }
+
+    $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+
+    return mysqli_fetch_assoc($resultado);
+    }//Fim formataData
+
