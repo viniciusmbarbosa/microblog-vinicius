@@ -3,9 +3,9 @@
 require_once "../inc/funcoes-usuarios.php";
 require_once "../inc/cabecalho-admin.php";
 
-/* Se o usuário logado Não FOR admin.... */
+/* Se o usuário logado NÃO FOR admin... */
 if( $_SESSION['tipo'] != "admin" ){
-	//Então redirecione para não-autorizado
+	// Então redirecione para não-autorizado
 	header("location:nao-autorizado.php");
 	exit;
 }
@@ -21,7 +21,9 @@ $usuarios = lerUsuarios($conexao);
 	<article class="col-12 bg-white rounded shadow my-1 py-4">
 		
 		<h2 class="text-center">
-		Usuários <span class="badge bg-dark">X</span>
+		Usuários <span class="badge bg-dark">
+			<?=count($usuarios)?>
+		</span>
 		</h2>
 
 		<p class="text-center mt-5">
@@ -44,13 +46,7 @@ $usuarios = lerUsuarios($conexao);
 
 				<tbody>
 
-<!-- começar o foreach neste ponto (ANTES DA TR) 
-Dicas: 
 
-1) Faça o foreach percorrer o array $usuarios COMO $usuario.
-2) Para mostrar cada informação, use $usuario[nome do campo].
-Exemplo: $usuario["nome"], $usuario["email"] etc
--->
 <?php foreach($usuarios as $usuario) { ?>
 					<tr>
 						<td> <?=$usuario['id']?> - <?=$usuario['nome']?> </td>
