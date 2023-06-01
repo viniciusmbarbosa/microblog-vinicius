@@ -125,4 +125,59 @@ function atualizarNoticia($conexao, $titulo, $texto, $resumo, $imagem, $idNotici
             WHERE id = $idNoticia AND usuario_id = $idUsuarioLogado";
     } 
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+
 }
+function excluirNoticia($conexao, $idNoticia, $idUsuarioLogado, $tipoUsuarioLogado){
+    
+    if($tipoUsuarioLogado == 'admin'){
+        /* SQL do admin: pode apagar qualuqer notícia pelo id */
+        $sql = "DELETE FROM noticias where id = $idNoticia";
+    }else {
+        /* SQL do editor: pode apagar SOMENTE sua própria notícias (pelo id da notícia e pelo seu próprio id) */
+        $sql = "DELETE FROM noticias WHERE id = $idNoticia AND usuario_id = $idUsuarioLogado";
+    }
+    mysqli_query($conexao, $sql) or die (mysqli_error($conexao));
+    
+}
+
+
+function lerTodasNoticias($conexao){
+    
+    $sql = "SELECT * FROM noticias ORDER BY data DESC";
+
+    
+    $resultado = mysqli_query($conexao, $sql) 
+                or die(mysqli_error($conexao));
+
+   
+    $noticias = [];
+
+    
+    while($noticia = mysqli_fetch_assoc($resultado)){
+        
+        array_push($noticias, $noticia);
+    }
+
+    
+    return $noticias;
+
+} // fim lerTodasNoticia//fim excluirNoticia
+
+/* Funções usadas na páginas da área pública */
+
+/* Usada em index.php */
+            function lerDetalhes($conexao, $id){
+                $sql = "SELECT
+                            noticias.id,
+                            noticias.titulo,
+                            noticias.data,
+                            noticias.imagem,
+                            noticias.texto,
+                            usuarios.nome
+                    FROM noticias INNER JOIN usuarios 
+                    ON noticias.usuario_id = usuarios.id
+                    WHERE noticias.id = $id";
+            $resultado = mysqli_query($conexao, $sql)
+                        or die (mysqli_error($conexao));
+            return mysqli_fetch_assoc($resultado);                                
+            }/* Fim  */

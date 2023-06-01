@@ -1,17 +1,24 @@
 <?php
 require "inc/cabecalho.php"; 
+require "inc/funcoes-noticias.php";
+
+$id = $_GET['id'];
+
+$noticia = lerDetalhes($conexao , $id);
+
+
 ?>
 
 
 <div class="row my-1 mx-md-n1">
 
     <article class="col-12">
-        <h2> Título da notícia... </h2>
+        <h2> <?=$noticia['titulo']?> </h2>
         <p class="font-weight-light">
-            <time>Data da notícia...</time> - <span>Autor da notícia</span>
+            <time><?=formataData($noticia['data'])?></time> - <span><?=$noticia['nome']?></span>
         </p>
-        <img src="https://picsum.photos/seed/picsum/200/100" alt="" class="float-left pr-2 img-fluid">
-        <p>Texto da notícia...</p>
+        <img src="imagens/<?=$noticia['imagem']?>"alt="" class="float-start pe-2 img-fluid">
+        <p><?=$noticia['texto']?></p>
     </article>
     
 
