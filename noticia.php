@@ -18,7 +18,7 @@ $noticia = lerDetalhes($conexao , $id);
             <time><?=formataData($noticia['data'])?></time> - <span><?=$noticia['nome']?></span>
         </p>
         <img src="imagens/<?=$noticia['imagem']?>"alt="" class="float-start pe-2 img-fluid">
-        <p><?=$noticia['texto']?></p>
+        <p><?=nl2br($noticia['texto'])?></p>
     </article>
     
 

@@ -180,4 +180,24 @@ function lerTodasNoticias($conexao){
             $resultado = mysqli_query($conexao, $sql)
                         or die (mysqli_error($conexao));
             return mysqli_fetch_assoc($resultado);                                
-            }/* Fim  */
+}/* Fim  lerDetalhes */
+
+/* Usada em resultados.php */
+function busca($conexao, $termo){
+    $sql = "SELECT * FROM noticias WHERE
+                                    titulo LIKE '%$termo%' OR
+                                    texto LIKE '%$termo%' OR
+                                    resumo LIKE '%$termo%' OR
+                                    ORDER BY data  DESC";
+
+    $resultado = mysqli_query($conexao, $sql)
+                    or die (mysqli_error($conexao));
+    $noticia = [];
+
+    while($noticia = mysqli_fetch_assoc($resultado)){
+        array_push($noticias, $noticia);
+    }
+
+    return $noticias;
+
+}
