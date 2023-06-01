@@ -1,5 +1,11 @@
 <?php
+require "inc/funcoes-noticias.php";
 require "inc/cabecalho.php"; 
+
+$termo = $_GET['busca'];
+$resultadoDaBusca = busca($conexao, $termo);
+var_dump($resultadoDaBusca)
+
 ?>
 
 
